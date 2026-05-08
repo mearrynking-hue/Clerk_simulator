@@ -1,0 +1,30 @@
+Topic: Bureaucracy
+Idea: Office Clerk Simulator
+
+Classes:
+- Status
+    This class will store data about the status types that documents can have(pending, approved, rejected, revision)
+- Documents
+    This is an abstract class that will contain an innit method with document data(who submitted it, what the document is about, 
+    its status, notes, and who signed it) and a document verification method. It will also have method verification, to verify documents.
+- Complaint
+    This class inherits methods from the Document class. Validation will check whether the complainant is specified.
+    If not, the complaint will fail verification.
+- Application
+    This class inherits methods from the Document class. Validation will check whether any attachments are attached to the document.
+    If not, the document will fail verification.
+- Clerk
+    This class will contain an innit method with clerk data(name and rank). Depending on their rank, a clerk will be able to accept different documents.
+    If their rank is not high enough, they will leave the document for review by management/boss, and the document status will remain pending until 
+    someone with the required rank takes it. If the rank is high enough, a decision will be made randomly to Approve or Reject the complaint.
+    If an application has no attachment, or the complainant is not specified in complaint, the status will change to revision.
+- Office
+    This class will contain the innit method where a document queue will be. The class system will receive documents. The workday class will begin the workday, 
+    during which clerks receive documents and decide what to do with them. The workday ends when there are no more documents left in the queue.
+
+Clerk names will be randomly generated(from a list of names), as well as their rank. Complaints and applications will be generated randomly(based on pre-maded lists).
+Each time, the clerks and complaints/applications will be different. The terminal will display which complaints/applications were added to the queue, how the clerks 
+worked during the day(for example: Clerk Bob accepted a complaint from Alice: pending; Complaint rejected). At the end of the day, 
+the document's new status will be displayed, indicating whether it was verified, whether the necessary attachments are present, 
+and which clerk signed the document.
+
