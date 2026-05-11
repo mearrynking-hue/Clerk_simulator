@@ -81,3 +81,18 @@ class Information(Document):
             self.status = Status.REJECTED
             self.notes = "No clearance for required documents"
 
+class License(Document):
+    def __init__(self, submitter, subject, business_approved=False, area=False, **kwargs):
+        super().__init__(submitter, subject, **kwargs)
+        self.business_approved = business_approved
+        self.area = area
+
+    def verify(self):
+        if self.business_approved and self.area:
+            self.status = Status.APPROVED
+        elif not self.area:
+            self.status = Status.REJECTED
+            self.notes = "Connot open business in this area"
+        elif not self.business_approved:
+            self.status = Status.REVISION
+            self.notes = "Business type that is not in the approved list"
