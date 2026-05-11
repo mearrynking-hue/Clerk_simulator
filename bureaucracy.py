@@ -45,3 +45,23 @@ class Application(Document):
         else:
             self.status = Status.REVISION
             self.notes = "Missing required attachements"
+
+class Permit(Document):
+    def __init__(self, submitter, subject, fee_paid=False, danger_level="Low", **kwargs):
+        super().__init__(submitter, subject, **kwargs)
+        self.fee_paid = fee_paid
+        self.danger_level = danger_level.lower()
+
+    def verify(self):
+        if not self.fee_paid:
+            self.status = Status.REVISION
+            self.notes = "Fee is not paid"
+            return
+        if self.danger_level == "High":
+            self.status = Status.REJECTED
+            self.notes = "High danger premit"
+        elif self.danger_level in ["Low", "Medium"]:
+            self.status = Status.APPROVED
+        else:
+            self.status = Status.REVISION
+            self.notes = "Invalid danger level"
