@@ -65,3 +65,19 @@ class Permit(Document):
         else:
             self.status = Status.REVISION
             self.notes = "Invalid danger level"
+
+class Information(Document):
+    def __init__(self, submitter, subject, secret=False, clearance=False, **kwargs):
+        super().__init__(submitter, subject, **kwargs)
+        self.secret = secret
+        self.clearance = clearance
+
+    def verify(self):
+        if not self.secret:
+            self.status = Status.APPROVED
+        elif self.secret and self.clearance:
+            self.status = Status.APPROVED
+        else:
+            self.status = Status.REJECTED
+            self.notes = "No clearance for required documents"
+
