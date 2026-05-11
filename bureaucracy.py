@@ -33,3 +33,15 @@ class Complaint(Document):
         else:
             self.status = Status.REJECTED
             self.notes = "Complainant must be specified"
+
+class Application(Document):
+    def __innit__(self, submitter, subject, attachments=False, **kwargs):
+        super().__init__(submitter, subject, **kwargs)
+        self.attachments = attachments
+
+    def verify(self):
+        if self.attachments:
+            self.status = Status.APPROVED
+        else:
+            self.status = Status.REVISION
+            self.notes = "Missing required attachements"
