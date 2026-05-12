@@ -68,3 +68,21 @@ def test_fee_paid_invalid_danger():
     assert doc.status == Status.REVISION
     assert doc.notes == "Invalid danger level"
 
+#checking if infirmation will be given when its public/not secret
+def test_information_not_secret():
+    doc = Information("Eden", "History", secret=False)
+    doc.verify()
+    assert doc.status == Status.APPROVED
+
+#checking if infirmation will be given when its secret, but with clearence
+def test_information_secret_clearence_true():
+    doc = Information("Eden", "Murder", secret=True, clearance=True)
+    doc.verify()
+    assert doc.status == Status.APPROVED
+
+#checking if infirmation will be given when its secret, but without clearence
+def test_information_secret_clearance_false():
+    doc = Information("Eden", "Murder", secret=True, clearance=False)
+    doc.verify()
+    assert doc.status == Status.REJECTED
+    assert doc.notes == "No clearance for required documents"
