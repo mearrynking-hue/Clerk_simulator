@@ -20,7 +20,7 @@ class Document(ABC):
         pass
 
     def __str__(self):
-        return f"[{self.__class__.__name__}] Subject: '{self.subject} | Submitter: {self.submitter} | Status: {self.status.value}"
+        return f"[{self.__class__.__name__}] Subject: '{self.subject}' | Submitter: {self.submitter} | Status: {self.status.value}"
         
 class Complaint(Document):
     def __init__(self, submitter, subject, complainant=True, **kwargs):
