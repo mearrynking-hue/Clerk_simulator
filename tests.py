@@ -13,4 +13,15 @@ def test_initial_values():
     assert doc.notes == ""
     assert str(doc) == "[Complaint] Subject: 'Grand theft beverage' | Submitter: Olive | Status: Pending"
 
-    
+#checking of complain will be approved when there is a complainant
+def test_complainant_true():
+    doc = Complaint("Olive", "Party noise", complainant=True)
+    doc.verify()
+    assert doc.status == Status.APPROVED
+
+#checking of complain will be approved when there is no complainant
+def test_complainant_false():
+    doc = Complaint("Olive", "Party noise", complainant=False)
+    doc.verify()
+    assert doc.status == Status.REJECTED
+    assert doc.notes == "Complainant must be specified"
