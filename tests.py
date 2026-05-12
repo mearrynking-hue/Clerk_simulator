@@ -86,3 +86,23 @@ def test_information_secret_clearance_false():
     doc.verify()
     assert doc.status == Status.REJECTED
     assert doc.notes == "No clearance for required documents"
+
+#checking if license will be approved if type of business and area correct
+def test_business_approved_area_valid():
+    doc = License("Iris", "Beauty Salon", business_approved=True, area=True)
+    doc.verify()
+    assert doc.status == Status.APPROVED
+
+#checking if license will be approved if type of business is correct, bus area not
+def test_business_approved_area_invalid():
+    doc = License("Iris", "Club", business_approved=True, area=False)
+    doc.verify()
+    assert doc.status == Status.REJECTED
+    assert doc.notes == "Connot open business in this area"
+
+#checking if license will be approved if type of business is nor approved, bus area correct
+def test_business_not_approved_area_valid():
+    doc = License("Iris", "Club", business_approved=False, area=True)
+    doc.verify()
+    assert doc.status == Status.REVISION
+    assert doc.notes == "Business type that is not in the approved list"
