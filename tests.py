@@ -38,3 +38,32 @@ def test_attachments_false():
     doc.verify()
     assert doc.status== Status.REVISION
     assert doc.notes == "Missing required attachements"
+
+#checking if permit will be approved with fee paid and low/medium danger level
+def test_fee_paid_correct_danger():
+    for level in ["low", "medium"]:
+        doc = Permit("Sofi", "House building", fee_paid=True, danger_level=level)
+        doc.verify()
+        assert doc.status == Status.APPROVED
+
+#checking if permit will be approved if fee is not paid
+def test_fee_paid_correct_danger():
+    for level in ["low", "medium"]:
+        doc = Permit("Sofi", "House building", fee_paid=False, danger_level=level)
+        doc.verify()
+        assert doc.status == Status.REVISION
+        assert doc.notes == "Fee is not paid"
+
+#checking if permit will be approved with high level danger
+def test_fee_paid_correct_danger():
+    doc = Permit("Sofi", "Chemical factory", fee_paid=True, danger_level="high")
+    doc.verify()
+    assert doc.status == Status.REJECTED
+    assert doc.notes == "High danger premit"
+
+#checking if permit will be approved with invalid level danger
+def test_fee_paid_correct_danger():
+    doc = Permit("Sofi", "Chemical factory", fee_paid=True, danger_level="super")
+    doc.verify()
+    assert doc.status == Status.REVISION
+    assert doc.notes == "Invalid danger level"
