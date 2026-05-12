@@ -35,7 +35,7 @@ class Complaint(Document):
             self.notes = "Complainant must be specified"
 
 class Application(Document):
-    def __innit__(self, submitter, subject, attachments=False, **kwargs):
+    def __init__(self, submitter, subject, attachments=False, **kwargs):
         super().__init__(submitter, subject, **kwargs)
         self.attachments = attachments
 
